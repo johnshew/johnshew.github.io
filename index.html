@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app="demoApp">
+
+<head>
+  <title>Lesson</title>
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body ng-controller="demoController">
+
+  <div class="well">
+    <p>
+      Welcome!
+    </p>
+  </div>
+
+  
+  <div class="container">
+    <div ng-container class="row">
+      <div ng-repeat="project in projects | filter:filterText | orderBy:sort">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="panel panel-default" ng-href="project.url">
+            <div class="panel-heading">{{ project.name }}</div>
+            <div class="panel-body">{{ project.description }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+
+  <script>
+    var app = angular.module('demoApp', []);
+    app.controller('demoController', function ($scope) {
+      $scope.projects = [{
+        'name': 'Web Application Tutorial',
+        'description': "<p>Lessons on how to use Angular and Bootstrap to create modern, responsive, web applications that can be transformed into great mobiles apps.</p>",
+        'url': "http://johnshew.github.io/WebAppTutorial"
+      }];
+
+      // sort, sortField, sortAscending, sortButtonClick(field)
+      $scope.$watch('sortField', function () {
+          $scope.sortAscending = true;
+        });
+      $scope.$watch('sortField+sortAscending', function () {
+        $scope.sort = (($scope.sortAscending) ? "+" : "-") + $scope.sortField;
+      });
+
+      $scope.sortField = "name";
+
+      $scope.sortButtonClick = function (field) {
+        $scope.sortField = field;
+        $scope.sortAscending = !$scope.sortAscending;
+      };
+    });
+  </script>
+</body>
+</html>
