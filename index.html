@@ -19,7 +19,7 @@
     <div ng-container class="row">
       <div ng-repeat="project in projects | filter:filterText | orderBy:sort">
         <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="panel panel-default" ng-href="project.url">
+          <div class="panel panel-default" ng-click="navigate(project.url)">
             <div class="panel-heading">{{ project.name }}</div>
             <div class="panel-body">{{ project.description }}</div>
           </div>
@@ -34,11 +34,11 @@
 
   <script>
     var app = angular.module('demoApp', []);
-    app.controller('demoController', function ($scope) {
+    app.controller('demoController', function ($scope, $window, $location) {
       $scope.projects = [{
         'name': 'Web Application Tutorial',
-        'description': "<p>Lessons on how to use Angular and Bootstrap to create modern, responsive, web applications that can be transformed into great mobiles apps.</p>",
-        'url': "http://johnshew.github.io/WebAppTutorial"
+        'description': "Lessons on how to use Angular and Bootstrap to create modern, responsive, web applications that can be transformed into great mobiles apps.",
+        'url': "http://johnshew.github.io/WebAppTutorial/Lessons/index.html"
       }];
 
       // sort, sortField, sortAscending, sortButtonClick(field)
@@ -55,6 +55,10 @@
         $scope.sortField = field;
         $scope.sortAscending = !$scope.sortAscending;
       };
+
+      $scope.navigate = function (url) {
+        $window.location.href = url;
+      }
     });
   </script>
 </body>
